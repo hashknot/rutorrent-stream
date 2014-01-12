@@ -20,7 +20,9 @@ theWebUI.config = function(data)
                 var lnk = this.getAttr(obj.id, "link");
                 if(lnk==null)
                 {
-                    theWebUI.getXSPF(theWebUI.dID,obj.id.substr(3));
+                    // theWebUI.getXSPF(theWebUI.dID,obj.id.substr(3));
+                    theWebUI.browserStream(theWebUI.dID,obj.id.substr(3));
+                    // theWebUI.vlcStream(theWebUI.dID,obj.id.substr(3));
                     return(false);
                 }
             }
