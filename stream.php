@@ -2,7 +2,7 @@
 require_once('./config.php');
 require_once( '../../php/xmlrpc.php' );
 
-if ( !isset($_GET['f']) || empty($_GET['f']) || !file_exists($_GET['f']) || !preg_match('/.(avi|mkv|ts|mp4|flv|wmv|mpe?g|ogg|wma|mp3|flac)$/i', $_GET['f']) ) {
+if (!isset($_GET['f']) || empty($_GET['f']) || !file_exists($_GET['f'])) {
     header('HTTP/1.0 404 Not Found');
     exit();
 }

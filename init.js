@@ -12,7 +12,7 @@ theWebUI.config = function(data)
             if(theWebUI.settings["webui.fls.view"])
             {
                 var arr = obj.id.split('_f_');
-                theWebUI.streamData(theWebUI.dID,arr[1]);
+                theWebUI.getXSPF(theWebUI.dID,arr[1]);
                 return(false);
             }
             else
@@ -20,7 +20,7 @@ theWebUI.config = function(data)
                 var lnk = this.getAttr(obj.id, "link");
                 if(lnk==null)
                 {
-                    theWebUI.streamData(theWebUI.dID,obj.id.substr(3));
+                    theWebUI.getXSPF(theWebUI.dID,obj.id.substr(3));
                     return(false);
                 }
             }
@@ -29,11 +29,44 @@ theWebUI.config = function(data)
     }
 }
 
-theWebUI.streamData = function( hash, no )
+theWebUI.getXSPF = function(hash, no)
 {
     $("#s_datahash").val(hash);
     $("#s_datano").val(no);
     $("#s_getdata").submit();
+}
+
+theWebUI.getStreamURL = function(hash, no, callback)
+{
+    $("#s_datahash").val(hash);
+    $("#s_datano").val(no);
+    $("#s_dataurl").val("true");
+    $.ajax({
+        url   : "plugins/stream/action.php",
+        async : false,
+        data  : {
+            "hash" : hash,
+            "no"   : no,
+            "url"  : true
+        },
+        success:callback,
+    })
+}
+
+theWebUI.browserStream = function(hash, no)
+{
+    theWebUI.getStreamURL(hash, no, function success(url)
+    {
+        window.open(url, '_blank')
+    })
+}
+
+theWebUI.vlcStream = function(hash, no)
+{
+    theWebUI.getStreamURL(hash, no, function success(url)
+    {
+        window.open("vlc://" + url, '_blank')
+    })
 }
 
 if(plugin.canChangeMenu())
@@ -64,7 +97,9 @@ if(plugin.canChangeMenu())
                             (theWebUI.dID.length>40))
                         fno = null;
                 }
-                theContextMenu.add( [theUILang.streamData,  (fno==null) ? null : "theWebUI.streamData('" + theWebUI.dID + "',"+fno+")"] );
+                theContextMenu.add([theUILang.getXSPF, (fno==null) ? null : "theWebUI.getXSPF('" + theWebUI.dID + "',"+fno+")"] );
+                theContextMenu.add([theUILang.browserStream, (fno==null) ? null : "theWebUI.browserStream('" + theWebUI.dID + "',"+fno+")"] );
+                theContextMenu.add([theUILang.vlcStream, (fno==null) ? null : "theWebUI.vlcStream('" + theWebUI.dID + "',"+fno+")"] );
             }
             return(true);
         }

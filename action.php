@@ -27,6 +27,12 @@ if(isset($_REQUEST['hash']) && isset($_REQUEST['no']))
 
         $location = SCHEME . '://' . $auth . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . '/stream.php?f=' . urlencode($filename);
 
+        if(isset($_REQUEST['url']) && $_REQUEST['url'] == "true"){
+            header("Content-type: text/plain");
+            echo $location;
+            exit;
+        }
+
         $out = '<?xml version="1.0" encoding="UTF-8"?>
             <playlist version="1" xmlns="http://xspf.org/ns/0/">
             <trackList>
