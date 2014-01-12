@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# Removes the leading "vlc://" from the recevied string.
+# Stores the HTTP URL in $uri.
+uri=$(echo "$1" | sed -r "s/^vlc:\/\///")
+
+# Use a player of your choice with $uri
+vlc $uri

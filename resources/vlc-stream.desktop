@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Name=VLCStream
+MimeType=x-scheme-handler/vlcstream
+Terminal=false
+Icon=A35F_hh.0
+
+# '%U' is the input URI.
+# The following line is assuming that 'vlcstream' is in $PATH.
+Exec=vlcstream '%U'
+# Else it will look something like:
+# Exec=/path/to/vlcstream '%U'
